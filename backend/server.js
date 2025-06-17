@@ -5,8 +5,9 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-
+const authRoutes = require('./routes/auth');
 const app = express();
+const authenticateJWT = require('./middleware/authenticateJWT');
 
 // Use Helmet to set secure HTTP headers
 app.use(helmet());
@@ -45,5 +46,20 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
+});
+
+app.use('/', authRoutes);
+
+app.get('/dashboard', authenticateJWT, (req, res) => {
+  res.json({ message: `Welcome, ${req.user.username}!` });
+});
+
+// Example: Protect multiple routes
+app.get('/profile', authenticateJWT, (req, res) => {
+  // Only accessible with valid JWT
+});
+
+app.post('/team', authenticateJWT, (req, res) => {
+  // Only accessible with valid JWT
 });
 
