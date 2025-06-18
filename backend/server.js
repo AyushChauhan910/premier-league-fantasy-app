@@ -62,6 +62,11 @@ app.listen(PORT, () => {
 
 app.use('/', authRoutes);
 
+// Protected route
+app.get('/dashboard', authenticateJWT, (req, res) => {
+  res.json({ message: `Hello, ${req.user.username}! This is your dashboard.` });
+});
+
 
 const shutdown = () => {
   logger.info('Shutting down server...');
