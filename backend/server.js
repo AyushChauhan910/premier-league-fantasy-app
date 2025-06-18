@@ -8,6 +8,18 @@ const rateLimit = require('express-rate-limit');
 const authRoutes = require('./routes/auth');
 const app = express();
 const authenticateJWT = require('./middleware/authenticateJWT');
+const logger = require('./logger');
+const { pool } = require('./db'); // Ensure you export pool from db.js
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection:', reason);
+  process.exit(1);
+});
 
 // Use Helmet to set secure HTTP headers
 app.use(helmet());
@@ -50,16 +62,32 @@ app.listen(PORT, () => {
 
 app.use('/', authRoutes);
 
-app.get('/dashboard', authenticateJWT, (req, res) => {
-  res.json({ message: `Welcome, ${req.user.username}!` });
-});
 
-// Example: Protect multiple routes
-app.get('/profile', authenticateJWT, (req, res) => {
-  // Only accessible with valid JWT
-});
+const shutdown = () => {
+  logger.info('Shutting down server...');
+  server.close(() => {
+    logger.info('HTTP server closed.');
+    pool.end(() => {
+      logger.info('PostgreSQL pool has ended.');
+      process.exit(0);
+    });
+  });
+  // Force shutdown if not closed in 10 seconds
+  setTimeout(() => {
+    logger.error('Forcefully shutting down.');
+    process.exit(1);
+  }, 10000);
+};
 
-app.post('/team', authenticateJWT, (req, res) => {
-  // Only accessible with valid JWT
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
+
+app.get('/test-db', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({ time: result.rows[0].now });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
