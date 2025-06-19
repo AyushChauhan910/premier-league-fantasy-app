@@ -5,59 +5,64 @@ const router = express.Router();
 const authenticateJWT = require('../middleware/authenticateJWT');
 const userModel = require('../models/user.js');
 
-// Registration Route
+// Registration Route (updated for email/username)
 router.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, username, password } = req.body;  // Added email
+  
   try {
-    // Check if user exists in PostgreSQL
-    const existingUser = await userModel.getUserByUsername(username);
+    // Check if email exists
+    const existingUser = await userModel.getUserByEmail(email);
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'Email already registered' });
     }
-    // Hash the password
+    
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    // Store user in PostgreSQL
-    await userModel.createUser(username, hashedPassword);
+    
+    // Create user with email and username
+    await userModel.createUser(email, username, hashedPassword);
     res.status(201).json({ message: 'User registered successfully!' });
   } catch (err) {
-        console.error('🔥 Full error:', err);
-        res.status(500).json({ message: 'Server error', error: err.message });
-    }
-
+    console.error('Registration error:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
 });
 
-// Login Route
+// Login Route (updated for email)
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;  // Changed to email
+  
   try {
-    // Fetch user from PostgreSQL
-    const user = await userModel.getUserByUsername(username);
+    // Fetch user by email
+    const user = await userModel.getUserByEmail(email);
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
+    
     // Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password_hash);
     if (!isPasswordValid) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
+    
     // Generate JWT
     const token = jwt.sign(
-      { userId: user.id, username: user.username },
+      { userId: user.id, email: user.email, username: user.username },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
-    res.json({ token });
+    res.json({ token, userId: user.id });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Protected Route Example
+// Protected route remains unchanged
 router.get('/protected', authenticateJWT, (req, res) => {
-  res.json({ message: 'This is a protected route', user: req.user });
+  res.json({ message: 'Protected route', user: req.user });
 });
 
-// Get User by ID
+// Get User by ID remains unchanged
 router.get('/users/:id', async (req, res) => {
   try {
     const user = await userModel.getUserById(req.params.id);

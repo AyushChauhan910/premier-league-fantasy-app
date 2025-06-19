@@ -9,7 +9,7 @@ const authRoutes = require('./routes/auth');
 const app = express();
 const authenticateJWT = require('./middleware/authenticateJWT');
 const logger = require('./logger');
-const { pool } = require('./db'); // Ensure you export pool from db.js
+const db = require('./db');  // Ensure you export pool from db.js
 
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
@@ -56,12 +56,12 @@ app.get('/', (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {  // Capture server instance
   console.log(`Server listening on port ${PORT}`);
 });
 
 app.use('/', authRoutes);
-
+app.use('/dashboard', authenticateJWT);
 // Protected route
 app.get('/dashboard', authenticateJWT, (req, res) => {
   res.json({ message: `Hello, ${req.user.username}! This is your dashboard.` });
@@ -72,7 +72,7 @@ const shutdown = () => {
   logger.info('Shutting down server...');
   server.close(() => {
     logger.info('HTTP server closed.');
-    pool.end(() => {
+    db.pool.end(() => {
       logger.info('PostgreSQL pool has ended.');
       process.exit(0);
     });
@@ -89,10 +89,15 @@ process.on('SIGINT', shutdown);
 
 app.get('/test-db', async (req, res) => {
   try {
-    const result = await pool.query('SELECT NOW()');
+    const result = await db.query('SELECT NOW()');
     res.json({ time: result.rows[0].now });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+app.use((err, req, res, next) => {
+  logger.error(`Unhandled error: ${err.message}`);
+  res.status(500).json({ error: 'Internal server error' });
 });
 
