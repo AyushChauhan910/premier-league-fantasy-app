@@ -9,7 +9,10 @@ const authRoutes = require('./routes/auth');
 const app = express();
 const authenticateJWT = require('./middleware/authenticateJWT');
 const logger = require('./logger');
-const db = require('./db');  // Ensure you export pool from db.js
+const db = require('./config/db');  // Ensure you export pool from db.js
+const teamRoutes = require('./routes/team');
+const playerRoutes = require('./routes/player');
+const teamSelectionRoutes = require('./routes/teamSelection');
 
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
@@ -60,13 +63,16 @@ const server = app.listen(PORT, () => {  // Capture server instance
   console.log(`Server listening on port ${PORT}`);
 });
 
-app.use('/', authRoutes);
+app.use('/api', authRoutes);
 app.use('/dashboard', authenticateJWT);
 // Protected route
 app.get('/dashboard', authenticateJWT, (req, res) => {
   res.json({ message: `Hello, ${req.user.username}! This is your dashboard.` });
 });
 
+app.use('/api/teams', teamRoutes);
+app.use('/api/players', playerRoutes);
+app.use('/api/team-selections', teamSelectionRoutes);
 
 const shutdown = () => {
   logger.info('Shutting down server...');
