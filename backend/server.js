@@ -1,5 +1,7 @@
 // server.js
 require('dotenv').config(); // Load environment variables from .env file
+require('./services/dataUpdater'); // Start background job
+
 
 const express = require('express');
 const cors = require('cors');
@@ -13,6 +15,9 @@ const db = require('./config/db');  // Ensure you export pool from db.js
 const teamRoutes = require('./routes/team');
 const playerRoutes = require('./routes/player');
 const teamSelectionRoutes = require('./routes/teamSelection');
+const { runSync } = require('./services/dataUpdater');
+const { fetchPlayers } = require('./services/footballDataService');
+
 
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
@@ -73,6 +78,41 @@ app.get('/dashboard', authenticateJWT, (req, res) => {
 app.use('/api/teams', teamRoutes);
 app.use('/api/players', playerRoutes);
 app.use('/api/team-selections', teamSelectionRoutes);
+
+app.get('/manual-sync', async (req, res) => {
+  try {
+    const result = await runSync();
+    res.json({ 
+      status: 'success',
+      message: 'Manual sync completed successfully',
+      details: result
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Manual sync failed',
+      error: err.message
+    });
+  }
+});
+
+app.get('/debug-players', async (req, res) => {
+  try {
+    const data = await fetchPlayers();
+    // Return the first team and its squad as a sample
+    res.json(data.teams.map(team => ({
+      team: team.name,
+      squad: team.squad.map(player => ({
+        id: player.id,
+        name: player.name,
+        position: player.position
+      }))
+    })));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 const shutdown = () => {
   logger.info('Shutting down server...');

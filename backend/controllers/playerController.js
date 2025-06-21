@@ -1,3 +1,4 @@
+const { fetchPlayers } = require('../services/footballDataService');
 const playerModel = require('../models/playerModel');
 
 exports.getPlayers = async (req, res) => {

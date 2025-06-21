@@ -8,7 +8,6 @@ const getAllPlayers = async () => {
 };
 
 const upsertPlayer = async (player) => {
-  // Upsert logic for syncing with Football-Data.org
   const result = await db.query(
     `INSERT INTO players (api_id, name, position, team, price)
      VALUES ($1, $2, $3, $4, $5)
