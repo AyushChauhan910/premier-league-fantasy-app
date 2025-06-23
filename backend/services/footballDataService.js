@@ -8,7 +8,12 @@ const API_KEY = process.env.FOOTBALL_DATA_API_KEY;
 
 const fetchWithCache = async (key, endpoint) => {
   const cachedData = apiCache.get(key);
-  if (cachedData) return cachedData;
+  if (cachedData) {
+    console.log('Returing data from cache for' , key);
+    return cachedData;
+  }
+
+  console.log('Fetching data for' , key);
 
   try {
     const response = await axios.get(`${API_URL}${endpoint}`, {
