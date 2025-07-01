@@ -1,0 +1,56 @@
+.players-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2em 5vw;
+}
+.player-search {
+  width: 100%;
+  padding: 0.7em 1em;
+  border-radius: 10px;
+  border: none;
+  background: #1a2236;
+  color: #fff;
+  margin-bottom: 2em;
+  font-size: 1em;
+}
+.players-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2em;
+}
+.player-card {
+  background: #232b47;
+  border-radius: 12px;
+  padding: 1.2em 1em;
+  min-width: 170px;
+  box-shadow: 0 2px 10px #0003;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: #fff;
+  cursor: pointer;
+}
+.player-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 30px #00eaff33;
+}
+.player-card-selected {
+  background: #00eaff22;
+  border: 2px solid #00eaff;
+}
+.player-name {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.player-team {
+  color: #00eaff;
+  font-size: 0.98em;
+}
+.player-position {
+  color: #fff;
+  font-size: 0.95em;
+}
+.player-price {
+  color: #f8d90f;
+  font-weight: bold;
+  font-size: 1em;
+  margin-top: 0.5em;
+}

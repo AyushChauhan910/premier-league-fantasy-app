@@ -1,0 +1,47 @@
+.teams-page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2em 5vw;
+}
+.team-create-form {
+  display: flex;
+  gap: 1em;
+  margin-bottom: 2em;
+}
+.team-create-form input {
+  flex: 1;
+  padding: 0.7em 1em;
+  border-radius: 10px;
+  border: none;
+  background: #1a2236;
+  color: #fff;
+}
+.team-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5em;
+}
+.team-card {
+  background: #232b47;
+  border-radius: 14px;
+  padding: 1.2em 1.5em;
+  min-width: 170px;
+  box-shadow: 0 2px 10px #0003;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 1em;
+}
+.team-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 30px #00eaff33;
+}
+.team-card-title {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 0.2em;
+}
+.team-card-budget {
+  color: #00eaff;
+  font-size: 0.95em;
+}

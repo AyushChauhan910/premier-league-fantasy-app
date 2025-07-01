@@ -1,0 +1,50 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1a2236;
+  padding: 0.7em 2em;
+  box-shadow: 0 2px 10px #0003;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.navbar-logo {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #00eaff;
+  letter-spacing: 1px;
+}
+.navbar-links a {
+  margin: 0 1em;
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.navbar-links a:hover {
+  color: #00eaff;
+}
+.navbar-auth {
+  display: flex;
+  align-items: center;
+}
+.btn-login, .btn-register, .btn-logout {
+  margin-left: 1em;
+  background: none;
+  border: 1px solid #00eaff;
+  color: #00eaff;
+  border-radius: 20px;
+  padding: 0.4em 1.1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-login:hover, .btn-register:hover, .btn-logout:hover {
+  background: #00eaff;
+  color: #1a2236;
+}
+.navbar-user {
+  margin-right: 1em;
+  font-size: 1em;
+  color: #fff;
+}

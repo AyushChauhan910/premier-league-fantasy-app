@@ -1,0 +1,55 @@
+body {
+  background: linear-gradient(120deg, #161c2d 0%, #2b5876 100%);
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+a {
+  color: #00eaff;
+  text-decoration: none;
+}
+.btn-primary {
+  background: linear-gradient(90deg, #00eaff 0%, #005bea 100%);
+  border: none;
+  color: #fff;
+  padding: 0.7em 1.5em;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  margin-top: 1em;
+  box-shadow: 0 2px 10px 0 #005bea44;
+}
+.btn-primary:hover {
+  box-shadow: 0 4px 20px 0 #00eaff88;
+}
+.fade-in {
+  animation: fadeIn 0.8s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.bounce-in {
+  animation: bounceIn 0.5s;
+}
+@keyframes bounceIn {
+  0% { transform: scale(0.6);}
+  60% { transform: scale(1.1);}
+  100% { transform: scale(1);}
+}
+.pop-in {
+  animation: popIn 0.4s;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.7);}
+  to { opacity: 1; transform: scale(1);}
+}
+.slide-in {
+  animation: slideIn 0.5s;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-40px);}
+  to { opacity: 1; transform: translateX(0);}
+}
