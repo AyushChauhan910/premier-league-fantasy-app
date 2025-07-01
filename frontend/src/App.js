@@ -10,13 +10,17 @@ import Players from "./pages/Players";
 import TeamSelection from "./pages/TeamSelection";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./styles/animations.css";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
+
+  const { isAuthenticated } = useAuth();
+
   return (
     <>
       <Navbar />
       <ToastContainer position="top-right" autoClose={3000} />
-      <Routes>
+      <Routes key={isAuthenticated ? "auth" : "guest"}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 

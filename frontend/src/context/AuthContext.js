@@ -9,14 +9,27 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  // Initialize state from localStorage on first render
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  });
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
+  const [isAuthenticated, setIsAuthenticated] = useState(() => !!localStorage.getItem("token"));
   const [loading, setLoading] = useState(false);
+  const [ready, setReady] = useState(false);
 
+  // Keep isAuthenticated in sync with token
+  useEffect(() => {
+    setIsAuthenticated(!!token);
+    setReady(true); // Mark context as ready after checking token
+  }, [token])
+
+  // Sync user from localStorage if token changes and user is not set
   useEffect(() => {
     if (token && !user) {
-      // Optionally, fetch user profile here if you have such endpoint
-      setUser(JSON.parse(localStorage.getItem("user")));
+      const stored = localStorage.getItem("user");
+      if (stored) setUser(JSON.parse(stored));
     }
   }, [token, user]);
 
@@ -28,10 +41,12 @@ export function AuthProvider({ children }) {
       setUser({ id: res.userId, email });
       localStorage.setItem("token", res.token);
       localStorage.setItem("user", JSON.stringify({ id: res.userId, email }));
+      setIsAuthenticated(true); // Immediate update!
       toast.success("Login successful!");
       return true;
     } catch (e) {
       toast.error(e.response?.data?.message || "Login failed");
+      setIsAuthenticated(false);
       return false;
     } finally {
       setLoading(false);
@@ -55,6 +70,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     setToken(null);
+    setIsAuthenticated(false);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.info("Logged out.");
@@ -69,7 +85,8 @@ export function AuthProvider({ children }) {
         login,
         register,
         logout,
-        isAuthenticated: !!token,
+        isAuthenticated,
+        ready
       }}
     >
       {children}

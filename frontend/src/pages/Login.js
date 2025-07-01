@@ -13,15 +13,19 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(form.email, form.password);
+    e.preventDefault();
+        const ok = await login(form.email, form.password);
+        if (ok) {
+            window.location.href = "/dashboard"; // Hard reload
+        }
     
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (isAuthenticated) {
       navigate("/dashboard", { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate]);*/
 
   return (
     <div className="auth-container fade-in">
