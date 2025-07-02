@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import api from "../services/api";
+import { getUserById } from "../services/api";
 
 const AuthContext = createContext();
 
@@ -36,12 +37,25 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     setLoading(true);
     try {
+      // 1. Login to get token and userId
       const res = await api.post("/api/login", { email, password });
+      console.log("Login response:", res);
+
+       const userId = res.data.userId;
+       const token = res.data.token;
+
       setToken(res.token);
-      setUser({ id: res.userId, email });
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("user", JSON.stringify({ id: res.userId, email }));
-      setIsAuthenticated(true); // Immediate update!
+      localStorage.setItem("token", token);
+
+      // 2. Fetch user profile using userId
+      const userRes = await getUserById(userId);
+      setUser(userRes.data);
+      console.log("Fetched user profile:", userRes.data); 
+
+      
+      localStorage.setItem("user", JSON.stringify(userRes.data));
+
+      setIsAuthenticated(true);
       toast.success("Login successful!");
       return true;
     } catch (e) {

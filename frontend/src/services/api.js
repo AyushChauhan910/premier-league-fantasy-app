@@ -14,4 +14,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+export const getUserById = (userId) => api.get(`/api/users/${userId}`);
+
 export default api;

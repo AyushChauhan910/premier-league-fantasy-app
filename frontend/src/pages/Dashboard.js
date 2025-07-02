@@ -7,7 +7,7 @@ export default function Dashboard() {
   return (
     <div className="dashboard fade-in">
       <h1>
-        Welcome, <span>{user?.email}</span>!
+        Welcome, <span>{user?.username}</span>!
       </h1>
       <div className="dashboard-cards">
         <div className="dashboard-card bounce-in">
