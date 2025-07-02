@@ -1,12 +1,12 @@
-import React, { useState , useEffect} from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState} from "react";
+import {Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/auth.css";
 
 export default function Login() {
-  const { login, loading , isAuthenticated } = useAuth();
+  const { login, loading} = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
-  const navigate = useNavigate();
+  
 
   const handleChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
