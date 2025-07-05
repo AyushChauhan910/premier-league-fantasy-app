@@ -1,16 +1,22 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
 import "../styles/dashboard.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   return (
     <div className="dashboard fade-in">
       <h1>
         Welcome, <span>{user?.username}</span>!
       </h1>
       <div className="dashboard-cards">
-        <div className="dashboard-card bounce-in">
+        <div className="dashboard-card bounce-in"
+          onClick={() => navigate("/teams")}
+          style={{ cursor: "pointer" }}
+          title="Go to Teams"
+        >
           <div className="dashboard-card-icon">⚽</div>
           <div>
             <div className="dashboard-card-title">Create your team</div>
