@@ -8,6 +8,8 @@ export default function TeamSelection() {
   const [players, setPlayers] = useState([]);
   const [selected, setSelected] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   // Fetch all players and current team selection
   useEffect(() => {
@@ -21,13 +23,12 @@ export default function TeamSelection() {
 
   // Handle player selection
   const handleSelect = async (player) => {
-    // Use player.id (database id) for backend, not api_id
     if (isSelected(player.id) || selected.length >= 11) return;
     setLoading(true);
     try {
       await api.post("/api/team-selections", {
         teamId,
-        playerId: player.id, // <-- Use database id here
+        playerId: player.id,
         isCaptain: selected.length === 0,
         isViceCaptain: selected.length === 1,
         isPlaying: true,
@@ -36,24 +37,36 @@ export default function TeamSelection() {
       const res = await api.get(`/api/team-selections/${teamId}`);
       setSelected(res.data || res);
     } catch (error) {
-      // Optionally show a user-friendly error message
       alert(error.response?.data?.message || "Failed to add player.");
     }
     setLoading(false);
   };
 
   const handleRemove = async (playerId) => {
-  setLoading(true);
-  try {
-    await api.delete(`/api/team-selections/${teamId}/${playerId}`);
-    // Refresh selection
-    const res = await api.get(`/api/team-selections/${teamId}`);
-    setSelected(res.data || res);
-  } catch (error) {
-    alert(error.response?.data?.message || "Failed to remove player.");
-  }
-  setLoading(false);
-};
+    setLoading(true);
+    try {
+      await api.delete(`/api/team-selections/${teamId}/${playerId}`);
+      const res = await api.get(`/api/team-selections/${teamId}`);
+      setSelected(res.data || res);
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to remove player.");
+    }
+    setLoading(false);
+  };
+
+  // Search logic: filter by name, team, or position
+  const filteredPlayers = players.filter(
+    (p) =>
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.team.toLowerCase().includes(search.toLowerCase()) ||
+      p.position.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // Handle search button click
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(searchInput.trim());
+  };
 
   return (
     <div className="team-selection-page fade-in">
@@ -67,7 +80,6 @@ export default function TeamSelection() {
               {sel.isCaptain ? "(C)" : sel.isViceCaptain ? "(VC)" : ""}
               <button
                 className="remove-btn"
-                style={{ marginLeft: "10px" }}
                 onClick={() => handleRemove(sel.player_id)}
                 disabled={loading}
               >
@@ -77,8 +89,32 @@ export default function TeamSelection() {
           ))}
         </ul>
       </div>
+
+      <form className="player-search-bar" onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Search by name, team, or position"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+        <button className="search-btn" type="submit" disabled={loading}>
+          Search
+        </button>
+        <button
+          className="clear-btn"
+          type="button"
+          onClick={() => {
+            setSearch("");
+            setSearchInput("");
+          }}
+          disabled={loading}
+        >
+          Clear
+        </button>
+      </form>
+
       <div className="players-list">
-        {players.map((player) => (
+        {filteredPlayers.map((player) => (
           <div
             className={
               "player-card pop-in " +
