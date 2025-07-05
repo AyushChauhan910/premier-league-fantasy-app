@@ -11,6 +11,7 @@ import TeamSelection from "./pages/TeamSelection";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./styles/animations.css";
 import { useAuth } from "./context/AuthContext";
+import Fixtures from "./pages/Fixtures";
 
 function App() {
 
@@ -54,6 +55,15 @@ function App() {
             <ProtectedRoute>
               <TeamSelection />
             </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/fixtures"
+          element={
+          <ProtectedRoute>
+            <Fixtures />
+          </ProtectedRoute>
           }
         />
         <Route path="/" element={<Navigate to="/dashboard" />} />

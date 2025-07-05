@@ -17,7 +17,7 @@ const playerRoutes = require('./routes/player');
 const teamSelectionRoutes = require('./routes/teamSelection');
 const { runSync } = require('./services/dataUpdater');
 const { fetchPlayers } = require('./services/footballDataService');
-
+const fixtureRoutes = require('./routes/fixtures');
 
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
@@ -78,7 +78,7 @@ app.get('/dashboard', authenticateJWT, (req, res) => {
 app.use('/api/teams', teamRoutes);
 app.use('/api/players', playerRoutes);
 app.use('/api/team-selections', teamSelectionRoutes);
-
+app.use('/api/fixtures', fixtureRoutes);
 app.get('/manual-sync', async (req, res) => {
   try {
     const result = await runSync();

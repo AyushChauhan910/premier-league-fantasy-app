@@ -30,7 +30,12 @@ export default function Dashboard() {
             <div className="dashboard-card-desc">Climb the leaderboard</div>
           </div>
         </div>
-        <div className="dashboard-card bounce-in" style={{ animationDelay: "0.4s" }}>
+        <div
+          className="dashboard-card bounce-in dashboard-card-clickable"
+          onClick={() => navigate("/fixtures")}
+          style={{ cursor: "pointer" }}
+          title="See Fixtures"
+        >
           <div className="dashboard-card-icon">📅</div>
           <div>
             <div className="dashboard-card-title">See fixtures</div>

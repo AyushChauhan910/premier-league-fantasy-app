@@ -1,0 +1,65 @@
+.fixtures-page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2em 5vw;
+}
+
+.fixtures-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.fixture-card {
+  background: #232b47;
+  border-radius: 14px;
+  padding: 1.2em 1.5em;
+  box-shadow: 0 2px 10px #0003;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  transition: box-shadow 0.2s, transform 0.18s;
+}
+
+.fixture-card:hover {
+  box-shadow: 0 8px 32px #00eaff33;
+  transform: translateY(-4px) scale(1.02);
+}
+
+.fixture-date {
+  color: #00eaff;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.fixture-teams {
+  font-size: 1.18em;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  font-weight: 500;
+}
+
+.fixture-team {
+  color: #fff;
+}
+
+.fixture-vs {
+  color: #aaa;
+  font-size: 0.98em;
+}
+
+.fixture-status {
+  font-size: 1em;
+  color: #f8d90f;
+  font-weight: 600;
+}
+
+.fixtures-loading,
+.fixtures-empty {
+  color: #aaa;
+  font-size: 1.1em;
+  margin-top: 2em;
+  text-align: center;
+}
