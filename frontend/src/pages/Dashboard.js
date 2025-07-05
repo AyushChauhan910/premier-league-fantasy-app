@@ -23,7 +23,12 @@ export default function Dashboard() {
             <div className="dashboard-card-desc">Pick your dream XI</div>
           </div>
         </div>
-        <div className="dashboard-card bounce-in" style={{ animationDelay: "0.2s" }}>
+        <div
+          className="dashboard-card bounce-in dashboard-card-clickable"
+          onClick={() => navigate("/leagues")}
+          style={{ cursor: "pointer" }}
+          title="Go to Leagues"
+        >
           <div className="dashboard-card-icon">🏆</div>
           <div>
             <div className="dashboard-card-title">Compete in leagues</div>

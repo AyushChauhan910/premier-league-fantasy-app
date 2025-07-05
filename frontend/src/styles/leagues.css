@@ -1,0 +1,131 @@
+.leagues-page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2em 5vw;
+}
+
+.leagues-actions {
+  display: flex;
+  gap: 2em;
+  margin-bottom: 2em;
+  flex-wrap: wrap;
+}
+
+.league-form {
+  display: flex;
+  gap: 0.7em;
+  align-items: center;
+}
+
+.league-form input[type="text"] {
+  padding: 0.6em 1em;
+  border-radius: 18px;
+  border: 1.5px solid #00eaff;
+  font-size: 1em;
+  background: #181f36;
+  color: #fff;
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+  min-width: 180px;
+}
+
+.league-form input[type="text"]:focus {
+  border: 1.5px solid #00eaff;
+  box-shadow: 0 2px 10px #00eaff33;
+}
+
+.league-btn {
+  background: linear-gradient(90deg, #00eaff 0%, #005bea 100%);
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  padding: 0.6em 1.3em;
+  font-weight: 600;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px #005bea44;
+}
+
+.league-btn:hover {
+  background: #00eaff;
+  color: #181f36;
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px #00eaff55;
+}
+
+.league-btn-join {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.league-btn-join:hover {
+  background: #c0392b;
+  color: #fff;
+}
+
+.league-error {
+  color: #e74c3c;
+  margin-bottom: 1em;
+  font-weight: 600;
+}
+
+.league-success {
+  color: #00eaff;
+  margin-bottom: 1em;
+  font-weight: 600;
+}
+
+.leagues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.league-card {
+  background: #232b47;
+  border-radius: 14px;
+  padding: 1.2em 1.5em;
+  box-shadow: 0 2px 10px #0003;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  transition: box-shadow 0.2s, transform 0.18s;
+}
+
+.league-card:hover {
+  box-shadow: 0 8px 32px #00eaff33;
+  transform: translateY(-4px) scale(1.02);
+}
+
+.league-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  font-size: 1.15em;
+  font-weight: 600;
+}
+
+.league-name {
+  color: #00eaff;
+}
+
+.league-code {
+  color: #f8d90f;
+  font-size: 0.98em;
+}
+
+.league-info {
+  color: #aaa;
+  font-size: 0.97em;
+  display: flex;
+  gap: 2em;
+}
+
+.league-empty {
+  color: #aaa;
+  font-size: 1.1em;
+  margin-top: 2em;
+  text-align: center;
+}

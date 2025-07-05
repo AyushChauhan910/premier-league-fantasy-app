@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import "./styles/animations.css";
 import { useAuth } from "./context/AuthContext";
 import Fixtures from "./pages/Fixtures";
+import Leagues from "./pages/Leagues";
 
 function App() {
 
@@ -64,6 +65,15 @@ function App() {
           <ProtectedRoute>
             <Fixtures />
           </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/leagues"
+          element={
+            <ProtectedRoute>
+              <Leagues />
+            </ProtectedRoute>
           }
         />
         <Route path="/" element={<Navigate to="/dashboard" />} />

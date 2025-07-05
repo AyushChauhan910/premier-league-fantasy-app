@@ -18,6 +18,8 @@ const teamSelectionRoutes = require('./routes/teamSelection');
 const { runSync } = require('./services/dataUpdater');
 const { fetchPlayers } = require('./services/footballDataService');
 const fixtureRoutes = require('./routes/fixtures');
+const leagueRoutes = require('./routes/league');
+const leagueMembershipRoutes = require('./routes/leagueMembership');
 
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
@@ -79,6 +81,8 @@ app.use('/api/teams', teamRoutes);
 app.use('/api/players', playerRoutes);
 app.use('/api/team-selections', teamSelectionRoutes);
 app.use('/api/fixtures', fixtureRoutes);
+app.use('/api/leagues', leagueRoutes);
+app.use('/api/league-memberships', leagueMembershipRoutes);
 app.get('/manual-sync', async (req, res) => {
   try {
     const result = await runSync();
