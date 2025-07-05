@@ -20,3 +20,11 @@ const getTeamSelection = async (teamId) => {
 };
 
 module.exports = { addPlayerToTeam, getTeamSelection };
+
+const removePlayerFromTeam = async (teamId, playerId) => {
+  await db.query(
+    `DELETE FROM team_selections WHERE team_id = $1 AND player_id = $2`,
+    [teamId, playerId]
+  );
+};
+module.exports = { addPlayerToTeam, getTeamSelection, removePlayerFromTeam };

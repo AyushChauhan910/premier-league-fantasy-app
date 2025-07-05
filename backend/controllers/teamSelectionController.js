@@ -26,3 +26,13 @@ exports.getTeamPlayers = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.removePlayerFromTeam = async (req, res) => {
+  const { teamId, playerId } = req.params;
+  try {
+    await teamSelectionModel.removePlayerFromTeam(teamId, playerId);
+    res.status(204).send();
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

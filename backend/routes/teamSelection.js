@@ -9,4 +9,6 @@ router.post('/', authenticateJWT, teamSelectionController.addPlayerToTeam);
 // Get all players in a team
 router.get('/:teamId', authenticateJWT, teamSelectionController.getTeamPlayers);
 
+router.delete('/:teamId/:playerId', authenticateJWT, teamSelectionController.removePlayerFromTeam);
+
 module.exports = router;
