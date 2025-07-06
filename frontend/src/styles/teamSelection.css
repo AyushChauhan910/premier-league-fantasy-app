@@ -116,3 +116,50 @@
   background: #c0392b;
   color: #fff;
 }
+
+.captain-label {
+  color: #00eaff;
+  font-weight: bold;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: #1a2236;
+  border: 1.5px solid #00eaff;
+  margin-left: 2px;
+  font-size: 0.98em;
+}
+
+.vice-captain-label {
+  color: #f8d90f;
+  font-weight: bold;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: #1a2236;
+  border: 1.5px solid #f8d90f;
+  margin-left: 2px;
+  font-size: 0.98em;
+}
+
+.save-btn {
+  background: linear-gradient(90deg, #00eaff 0%, #005bea 100%);
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  padding: 0.7em 2em;
+  font-weight: 700;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 2px 10px #005bea44;
+  margin-left: 0;
+}
+
+.save-btn:disabled {
+  cursor: not-allowed;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: #00eaff;
+  color: #181f36;
+  transform: scale(1.04);
+  box-shadow: 0 4px 20px #00eaff55;
+}

@@ -5,6 +5,7 @@ const matchModel = require('../models/matchModel');
 const { getInitialPlayerPrice } = require('./priceUtils.js');
 const db = require('../config/db'); // Add this below other requires
 const { getGameweekIdForDate } = require('./gameweekUtils');
+const { processCompletedMatches } = require('./pointsCalculator');
 
 console.log('[Background Job] Initializing data updater...');
 
@@ -183,3 +184,11 @@ cron.schedule('0 */6 * * *', async () => {
 
 // Export for manual triggering
 module.exports = { runSync };
+
+cron.schedule('0 * * * *', async () => { // every hour
+  try {
+    await processCompletedMatches();
+  } catch (err) {
+    console.error('[Points Calculator] Scheduled run failed:', err.message);
+  }
+});
