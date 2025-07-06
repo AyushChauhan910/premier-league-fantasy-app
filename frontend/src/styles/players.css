@@ -54,3 +54,8 @@
   font-size: 1em;
   margin-top: 0.5em;
 }
+
+.player-modal-content button {
+  right: 1.5em; top: 3em; background: #e74c3c; color: #fff; border: none; border-radius: 8px; padding: 0.2em 1em; cursor: pointer;
+}
+
