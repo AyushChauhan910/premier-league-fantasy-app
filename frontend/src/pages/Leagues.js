@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../services/api";
 import "../styles/leagues.css";
+import LeagueLeaderboard from "./LeagueLeaderboard"; // See below for this component
 
 export default function Leagues() {
   const [leagues, setLeagues] = useState([]);
@@ -10,15 +11,22 @@ export default function Leagues() {
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [selectedLeagueId, setSelectedLeagueId] = useState(null);
+  const [selectedLeagueName, setSelectedLeagueName] = useState("");
 
-  // Fetch user's leagues on mount
+  const handleLeagueClick = (league) => {
+    setSelectedLeagueId(league.id);
+    setSelectedLeagueName(league.name);
+    setShowLeaderboard(true);
+  };
+
   useEffect(() => {
     api.get("/api/leagues/my")
       .then(res => setLeagues(res.data || res))
       .catch(() => setLeagues([]));
   }, []);
 
-  // Create a new league
   const handleCreateLeague = async (e) => {
     e.preventDefault();
     setCreating(true);
@@ -37,7 +45,6 @@ export default function Leagues() {
     setCreating(false);
   };
 
-  // Join a league by code
   const handleJoinLeague = async (e) => {
     e.preventDefault();
     setJoining(true);
@@ -46,7 +53,6 @@ export default function Leagues() {
       await api.post("/api/league-memberships/join", { code: leagueCode });
       setSuccess(`Joined league with code "${leagueCode}"!`);
       setLeagueCode("");
-      // Optionally, refetch leagues
       const res = await api.get("/api/leagues/my");
       setLeagues(res.data || res);
     } catch (err) {
@@ -91,7 +97,13 @@ export default function Leagues() {
           <div className="league-empty">You have not joined any leagues yet.</div>
         ) : (
           leagues.map((lg, i) => (
-            <div className="league-card pop-in" key={lg.id || i}>
+            <div
+              className="league-card pop-in"
+              key={lg.id || i}
+              onClick={() => handleLeagueClick(lg)}
+              style={{ cursor: "pointer" }}
+              title="View Leaderboard"
+            >
               <div className="league-card-header">
                 <span className="league-name">{lg.name}</span>
                 {lg.code && (
@@ -106,6 +118,13 @@ export default function Leagues() {
           ))
         )}
       </div>
+      {showLeaderboard && (
+        <LeagueLeaderboard
+          leagueId={selectedLeagueId}
+          leagueName={selectedLeagueName}
+          onClose={() => setShowLeaderboard(false)}
+        />
+      )}
     </div>
   );
 }

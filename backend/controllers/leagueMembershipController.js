@@ -40,3 +40,29 @@ exports.joinLeagueByCode = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+const db = require('../config/db');
+
+exports.getLeagueLeaderboard = async (req, res) => {
+  const leagueId = req.params.leagueId;
+  try {
+    const result = await db.query(`
+      SELECT 
+        t.id AS team_id,
+        t.team_name,
+        u.username,
+        COALESCE(SUM(pgs.total_points), 0) AS total_points
+      FROM league_memberships lm
+      JOIN teams t ON lm.user_id = t.user_id
+      JOIN users u ON t.user_id = u.id
+      LEFT JOIN team_selections ts ON ts.team_id = t.id
+      LEFT JOIN player_gameweek_stats pgs ON ts.player_id = pgs.player_id
+      WHERE lm.league_id = $1
+      GROUP BY t.id, t.team_name, u.username
+      ORDER BY total_points DESC NULLS LAST
+    `, [leagueId]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

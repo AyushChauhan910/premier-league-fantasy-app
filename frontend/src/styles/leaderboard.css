@@ -1,0 +1,29 @@
+.leaderboard-modal {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;
+  z-index: 999;
+}
+.leaderboard-modal-content {
+  background: #232b47; color: #fff; padding: 2em 2.5em; border-radius: 16px; min-width: 350px;
+  box-shadow: 0 4px 32px #0006; position: relative;
+}
+.close-btn {
+  position: absolute; right: 1.2em; top: 1.2em; background: #e74c3c; color: #fff;
+  border: none; border-radius: 8px; padding: 0.3em 1em; cursor: pointer;
+  font-weight: bold; font-size: 1em;
+}
+.leaderboard-table {
+  width: 100%; border-collapse: collapse; margin-top: 1em;
+}
+.leaderboard-table th, .leaderboard-table td {
+  text-align: left; padding: 0.6em 1.1em; vertical-align: middle;
+}
+.leaderboard-table th {
+  color: #00eaff; font-weight: 600; background: transparent; border-bottom: 1.5px solid #232b47;
+}
+.leaderboard-table tr {
+  border-bottom: 1px solid #232b47;
+}
+.leaderboard-table tr:nth-child(even) {
+  background: #1a2236;
+}
