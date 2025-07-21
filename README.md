@@ -1,157 +1,116 @@
-# Premier League Fantasy Football App
+# ⚽ Premier League Fantasy
 
-A zero-cost, full-stack fantasy football application focused on the English Premier League, built as a student project to demonstrate full-stack development skills, API integration, and deployment using free tools and services.
-
----
-
-## Table of Contents
-
-- [Project Overview](#project-overview)  
-- [Features](#features)  
-- [Tech Stack](#tech-stack)  
-- [Getting Started](#getting-started)  
-- [Folder Structure](#folder-structure)  
-- [Environment Variables](#environment-variables)  
-- [Running Locally](#running-locally)  
-- [Deployment](#deployment)  
-- [Contributing](#contributing)  
-- [License](#license)  
-- [Contact](#contact)  
+Welcome to **Premier League Fantasy** – a full-stack web application where football fans can create their dream teams, join leagues, compete with friends, and track real-time Premier League stats!
 
 ---
 
-## Project Overview
+## 🚀 Features
 
-This project is a simplified fantasy football app where users can create teams from Premier League players, track fixtures, and see leaderboards. It uses free APIs like Football-Data.org for live data, React/Next.js for the frontend, and Node.js/Express with PostgreSQL for the backend.
-
-The goal is to build a portfolio-worthy project demonstrating:
-
-- Full-stack development  
-- API integration and data caching  
-- User authentication and authorization  
-- Deployment on free hosting platforms  
+- **User Authentication:** Secure registration and login with JWT.
+- **Team Management:** Build and manage your fantasy football team.
+- **Live Fixtures & Stats:** Real-time Premier League fixtures and player statistics.
+- **Leagues:** Create or join leagues, invite friends, and compete on leaderboards.
+- **Gameweek Updates:** Automatic updates for each gameweek, including points calculation.
+- **Responsive UI:** Modern, mobile-friendly React frontend.
 
 ---
 
-## Features
+## 🏗️ Tech Stack
 
-- User registration and login (JWT-based authentication)  
-- Team creation with player selection within a budget  
-- Display of upcoming Premier League fixtures  
-- Basic scoring system (goals, assists, clean sheets)  
-- Leaderboard showing user rankings  
-- Responsive UI with Next.js (React framework)  
-
----
-
-## Tech Stack
-
-| Layer           | Technology                     |
-|-----------------|-------------------------------|
-| Frontend        | Next.js (React), Axios, Styled-Components |
-| Backend         | Node.js, Express, PostgreSQL  |
-| Authentication  | JWT, bcrypt                   |
-| Data Source     | Football-Data.org API          |
-| Hosting         | Vercel (frontend), Railway (backend + DB) |
+- **Frontend:** React, Context API, Axios, CSS Modules
+- **Backend:** Node.js, Express, MongoDB (Mongoose)
+- **Authentication:** JWT (JSON Web Tokens)
+- **API Integration:** Premier League data (via custom services)
+- **Other:** Rate limiting, logging, and secure middleware
 
 ---
 
-## Getting Started
+## 📦 Project Structure
 
-### Prerequisites
-
-- Node.js (v14 or later)  
-- npm or yarn  
-- PostgreSQL (local or cloud instance)  
-- Football-Data.org API key (free tier)  
-
----
-
-## Folder Structure
-
+```
 premier-league-fantasy/
-├── backend/ # Express backend API
-│ ├── server.js # Main server entry point
-│ ├── routes/ # API routes
-│ ├── controllers/ # Business logic
-│ ├── models/ # Database models
-│ ├── config/ # Configuration (DB, env)
-│ └── package.json # Backend dependencies
-│
-├── frontend/ # Next.js frontend app
-│ ├── pages/ # React pages and routes
-│ ├── components/ # Reusable UI components
-│ ├── styles/ # CSS/Styled-components
-│ └── package.json # Frontend dependencies
-│
-└── README.md # Project documentation
-
+  ├── backend/         # Express API, models, controllers, services
+  ├── frontend/        # React app (src/components, pages, context, services)
+  └── database_schema.sql
+```
 
 ---
 
-## Environment Variables
+## 🛠️ Getting Started
 
-Create `.env` files in both `backend` and `frontend-next` directories with these variables:
+### 1. Clone the Repository
 
-### Backend `.env`
+```bash
+git clone https://github.com/your-username/premier-league-fantasy.git
+cd premier-league-fantasy
+```
 
-PORT=3000
-DATABASE_URL=postgresql://user:password@host:port/dbname
-JWT_SECRET=your_jwt_secret_key
-FOOTBALL_DATA_API_KEY=your_football_data_api_key
+### 2. Setup the Backend
 
-### Frontend `.env.local`
-
-NEXT_PUBLIC_API_URL=http://localhost:3000/api
-
-
-*Note:* Never commit `.env` files with real secrets. Use `.env.example` with placeholders instead.
-
----
-
-## Running Locally
-
-### Backend
-
+```bash
 cd backend
 npm install
-npm run dev
+# Create a .env file with your MongoDB URI and JWT secret
+npm start
+```
 
+**Environment Variables Example (`backend/.env`):**
+```
+MONGODB_URI=mongodb://localhost:27017/premier-league-fantasy
+JWT_SECRET=your_jwt_secret
+PORT=3001
+```
 
-Server will run on `http://localhost:3000`
+### 3. Setup the Frontend
 
-### Frontend
-
-cd frontend-next
+```bash
+cd ../frontend
 npm install
-npm run dev
+# Create a .env file with your backend API URL
+npm start
+```
 
-
-Frontend will run on `http://localhost:3001` (or default Next.js port)
-
----
-
-## Deployment
-
-- Frontend deployed on [Vercel](https://vercel.com) for seamless Next.js hosting.  
-- Backend and PostgreSQL hosted on [Railway](https://railway.app) free tier.
+**Environment Variables Example (`frontend/.env`):**
+```
+REACT_APP_API_URL=http://localhost:3001
+```
 
 ---
 
-## Contributing
+## 🌟 Usage
 
-Contributions are welcome! Please open issues or submit pull requests for bugs, features, or improvements.
-
----
-
-## Contact
-
-Ayush Chauhan  
-- GitHub: [@AyushChauhan910](https://github.com/AyushChauhan910)  
-- Email: your.email@example.com  
+1. **Register** a new account or **login**.
+2. **Create your team** by selecting players within your budget.
+3. **Join or create leagues** to compete with friends.
+4. **Set your lineup** each gameweek and track your points.
+5. **Climb the leaderboard** and become the ultimate fantasy manager!
 
 ---
 
-*Built with ❤️ and passion for football and coding.*
+## 🧩 Key Files & Folders
+
+- `backend/models/` – Mongoose models for users, teams, players, leagues, etc.
+- `backend/controllers/` – Express route controllers for business logic.
+- `backend/services/` – Data fetching, points calculation, and utility services.
+- `frontend/src/pages/` – Main React pages (Dashboard, Teams, Players, etc.)
+- `frontend/src/components/` – Reusable UI components (Navbar, Spinner, etc.)
+- `frontend/src/services/api.js` – Axios instance for API calls.
+
+---
+
+## 🏆 Contributing
+
+Contributions are welcome! Please open issues or submit pull requests for new features, bug fixes, or improvements.
 
 
+---
+
+## 🙌 Acknowledgements
+
+- [Premier League](https://www.premierleague.com/) for inspiration and data.
+- [React](https://reactjs.org/), [Express](https://expressjs.com/), [MongoDB](https://www.mongodb.com/), and all open-source contributors.
+
+---
+
+**Enjoy managing your dream team!**  
+*May the best manager win!* 
